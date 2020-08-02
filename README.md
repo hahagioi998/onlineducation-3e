@@ -1,23 +1,40 @@
-# {{ name }}
+### 善逸教育-前端页面(开发中...)
+前端部分，使用主流的前端框架Vue，使用Es6的开发规范，采用模块化的开发模式。
 
-> {{ description }}
+### 涉及的技术
+1. nuxt
+2. VUE
+3. element-ui
+4. axios
+5. node.js
 
-## Build Setup
 
-``` bash
-# install dependencies
-$ npm install # Or yarn install
+#### [后端传送门](https://github.com/573e/OnlinEducation)
+1. SpringBoot
+2. SpringCloud
+3. MyBatisPlus
+4. SpringSecurity
+5. redis
+6. 阿里云oss
+7. 阿里云视频点播服务
+8. 阿里云短信服务
+9. 微信登录，微信支付
+10. Docker
+11. Git
+12. jenkins
 
-# serve with hot reload at localhost:3000
-$ npm run dev
+#### [后台内容管理传送门](https://github.com/573e/onlineducation-admin)
+1. VUE
+2. element-ui
+3. axios
+4. node.js
 
-# build for production and launch server
-$ npm run build
-$ npm start
 
-# generate static project
-$ npm run generate
-```
+### 功能
+1. 待
+2. 完
+3. 善
 
-For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).
 
+### 在线体验
+[在线demo](https://www.baidu.com)
