@@ -4,14 +4,9 @@
     <!-- 幻灯片 开始 -->
     <div v-swiper:mySwiper="swiperOption">
         <div class="swiper-wrapper">
-            <div class="swiper-slide" style="background: #040B1B;">
-                <a target="_blank" href="/">
-                    <img src="~/assets/photo/banner/1525939573202.png" alt="首页banner">
-                </a>
-            </div>
-            <div class="swiper-slide" style="background: #040B1B;">
-                <a target="_blank" href="/">
-                    <img src="~/assets/photo/banner/1525939573202.png" alt="首页banner">
+            <div v-for="banner in bannerList" :key="banner.id" class="swiper-slide" style="background: #040B1B;">
+                <a target="_blank">
+                    <img :src="banner.imageUrl" :alt="banner.title" style="width: 100%">
                 </a>
             </div>
         </div>
@@ -370,6 +365,8 @@
 </template>
 
 <script>
+import banner from '@/api/banner'
+
 export default {
   data () {
     return {
@@ -386,7 +383,7 @@ export default {
         autoplay: {
           delay: 2000,
           // 操作 swiper 后, 不停止切换
-          disableOnInteraction: false
+          disableOnInteraction: true
         },
         spaceBetween: 30,
         loop: true,
@@ -395,8 +392,26 @@ export default {
           nextEl: '.swiper-button-next',//下一页dom节点
           prevEl: '.swiper-button-prev'//前一页dom节点
         }
-      }
+      },
+
+      bannerList:[],
     }
-  }
+  },
+
+  created() {
+    // 调用 查询banner数据 的方法
+    this.getListBanner()
+  },
+
+  methods:{
+    // 查询 banner 数据
+    getListBanner() {
+      banner.getListBanner()
+      .then(response => {
+        this.bannerList = response.data.data.banners
+      })
+    },
+  },
+
 }
 </script>
