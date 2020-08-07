@@ -25,6 +25,8 @@ module.exports = {
     /*
     ** Run ESLint on save
     */
+    vendor: ['element-ui'],
+
     extend (config, { isDev, isClient }) {
       if (isDev && isClient) {
         config.module.rules.push({
@@ -39,10 +41,10 @@ module.exports = {
   },
   
   plugins: [
-    { src: '~/plugins/nuxt-swiper-plugin.js', ssr: false }
+    { src:'~plugins/element-ui', ssr: false },
   ],
   css: [
-    'swiper/dist/css/swiper.css'
+    'element-ui/lib/theme-chalk/index.css'
   ]
 }
 
