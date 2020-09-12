@@ -19,22 +19,16 @@
                   <a title="全部" href="#">全部</a>
                 </li>
                 <li>
-                  <a title="数据库" href="#">数据库</a>
+                  <a title="计算机" href="#">计算机</a>
                 </li>
                 <li class="current">
-                  <a title="外语考试" href="#">外语考试</a>
+                  <a title="艺术设计" href="#">艺术设计</a>
                 </li>
                 <li>
-                  <a title="教师资格证" href="#">教师资格证</a>
+                  <a title="文哲史" href="#">文哲史</a>
                 </li>
                 <li>
-                  <a title="公务员" href="#">公务员</a>
-                </li>
-                <li>
-                  <a title="移动开发" href="#">移动开发</a>
-                </li>
-                <li>
-                  <a title="操作系统" href="#">操作系统</a>
+                  <a title="法学" href="#">法学</a>
                 </li>
               </ul>
             </dd>
@@ -46,13 +40,19 @@
             <dd class="c-s-dl-li">
               <ul class="clearfix">
                 <li>
-                  <a title="职称英语" href="#">职称英语</a>
+                  <a title="艺术学" href="#">艺术学</a>
                 </li>
                 <li>
-                  <a title="英语四级" href="#">英语四级</a>
+                  <a title="美术学" href="#">美术学</a>
                 </li>
                 <li>
-                  <a title="英语六级" href="#">英语六级</a>
+                  <a title="设计学" href="#">设计学</a>
+                </li>
+                <li>
+                  <a title="戏剧与影视" href="#">戏剧与影视</a>
+                </li>
+                <li>
+                  <a title="音乐与舞蹈" href="#">音乐与舞蹈</a>
                 </li>
               </ul>
             </dd>
