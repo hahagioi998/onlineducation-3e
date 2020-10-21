@@ -25,7 +25,7 @@
             <router-link to="/qa" tag="li" active-class="current">
               <a>问答</a>
             </router-link>
-          </ul>1
+          </ul>
           <!-- / nav -->
           <ul class="h-r-login">
             <li v-if="!loginInfo.id" id="no-login">
@@ -149,6 +149,16 @@ export default {
         this.loginInfo = JSON.parse(userInfo);
       }
     },
+
+    // 用户退出
+    logout() {
+      // 清空 cookie 中的值
+      cookie.set('3e_token', '', {domain: 'localhost'})
+      cookie.set('3e_userInfo', '', {domain: 'localhost'})
+      // 刷新首页面
+      window.location.href = "/"
+    },
+
   },
 };
 </script>
