@@ -131,6 +131,7 @@ import "~/assets/css/theme.css";
 import "~/assets/css/global.css";
 import "~/assets/css/web.css";
 import cookie from "js-cookie";
+import loginApi from "@/api/login";
 export default {
   data() {
     return {
@@ -139,6 +140,12 @@ export default {
     };
   },
   created() {
+    // 获取路径中的 token
+    this.token = this.$route.query.token
+    if (this.token) {
+      // 判断路径中是否有token
+      this.wxLogin();
+    }
     this.showInfo();
   },
   methods: {
@@ -157,6 +164,20 @@ export default {
       cookie.set('3e_userInfo', '', {domain: 'localhost'})
       // 刷新首页面
       window.location.href = "/"
+    },
+
+    // 微信扫码登录, 用户信息回显
+    wxLogin() {
+      // 将 token 放到 cookie
+      cookie.set('3e_token', this.token, {domain: 'localhost'})
+      cookie.set('3e_userInfo', '', {domain: 'localhost'})
+      // 根据 token 获取用户信息
+      loginApi.getUserInfoByToken()
+      .then(response => {
+        this.loginInfo = response.data.data.userInfo;
+        // 获取返回的用户信息
+        cookie.set('3e_userInfo', this.loginInfo, {domain: 'localhost'})
+      })
     },
 
   },
