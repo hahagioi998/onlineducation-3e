@@ -8,6 +8,15 @@ export default({
       method: 'post'
     })
     
-  }
+  },
+
+  // 讲师详情
+  getTeacherInfo(teacherId) {
+    return request({
+      url: `/eduservice/teacherFront/getTeacherFrontInfo/${teacherId}`,
+      method: 'get'
+    })
+    
+  },
 
 })
