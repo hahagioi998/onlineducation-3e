@@ -18,17 +18,8 @@
                 <li>
                   <a title="全部" href="#">全部</a>
                 </li>
-                <li>
-                  <a title="计算机" href="#">计算机</a>
-                </li>
-                <li class="current">
-                  <a title="艺术设计" href="#">艺术设计</a>
-                </li>
-                <li>
-                  <a title="文哲史" href="#">文哲史</a>
-                </li>
-                <li>
-                  <a title="法学" href="#">法学</a>
+                <li v-for="(item, index) in subjectNestedList" :key="index">
+                  <a href="" :title="item.title">{{item.title}}</a>
                 </li>
               </ul>
             </dd>
@@ -39,20 +30,8 @@
             </dt>
             <dd class="c-s-dl-li">
               <ul class="clearfix">
-                <li>
-                  <a title="艺术学" href="#">艺术学</a>
-                </li>
-                <li>
-                  <a title="美术学" href="#">美术学</a>
-                </li>
-                <li>
-                  <a title="设计学" href="#">设计学</a>
-                </li>
-                <li>
-                  <a title="戏剧与影视" href="#">戏剧与影视</a>
-                </li>
-                <li>
-                  <a title="音乐与舞蹈" href="#">音乐与舞蹈</a>
+                <li v-for="(item, index) in subSubjectList" :key="index">
+                  <a :title="item.title" href="#">{{item.title}}</a>
                 </li>
               </ul>
             </dd>
@@ -84,213 +63,37 @@
         </div>
         <div class="mt40">
           <!-- /无数据提示 开始-->
-          <section class="no-data-wrap">
+          <section class="no-data-wrap" v-if="data.total == 0">
             <em class="icon30 no-data-ico">&nbsp;</em>
             <span class="c-666 fsize14 ml10 vam">没有相关数据，小编正在努力整理中...</span>
           </section>
           <!-- /无数据提示 结束-->
-          <article class="comm-course-list">
+          <article class="comm-course-list" v-if="data.total > 0">
             <ul class="of" id="bna">
-              <li>
+              <li v-for="item in data.records" :key="item.id">
                 <div class="cc-l-wrap">
                   <section class="course-img">
-                    <img src="~/assets/photo/course/1442295592705.jpg" class="img-responsive" alt="听力口语">
+                    <img :src="item.cover" class="img-responsive" :alt="item.title">
                     <div class="cc-mask">
                       <a href="/course/1" title="开始学习" class="comm-btn c-btn-1">开始学习</a>
                     </div>
                   </section>
                   <h3 class="hLh30 txtOf mt10">
-                    <a href="/course/1" title="听力口语" class="course-title fsize18 c-333">听力口语</a>
+                    <a href="/course/1" :title="item.title" class="course-title fsize18 c-333">{{item.title}}</a>
                   </h3>
                   <section class="mt10 hLh20 of">
-                    <span class="fr jgTag bg-green">
+                    <span class="fr jgTag bg-green" v-if="Number(item.price) === 0">
                       <i class="c-fff fsize12 f-fA">免费</i>
                     </span>
                     <span class="fl jgAttr c-ccc f-fA">
-                      <i class="c-999 f-fA">9634人学习</i>
+                      <i class="c-999 f-fA">{{item.buyCount}}人学习</i>
                       |
-                      <i class="c-999 f-fA">9634评论</i>
+                      <i class="c-999 f-fA">{{item.viewCount}}浏览量</i>
                     </span>
                   </section>
                 </div>
               </li>
-              <li>
-                <div class="cc-l-wrap">
-                  <section class="course-img">
-                    <img src="~/assets/photo/course/1442295581911.jpg" class="img-responsive" alt="Java精品课程">
-                    <div class="cc-mask">
-                      <a href="/course/1" title="开始学习" class="comm-btn c-btn-1">开始学习</a>
-                    </div>
-                  </section>
-                  <h3 class="hLh30 txtOf mt10">
-                    <a href="/course/1" title="Java精品课程" class="course-title fsize18 c-333">Java精品课程</a>
-                  </h3>
-                  <section class="mt10 hLh20 of">
-                    <span class="fr jgTag bg-green">
-                      <i class="c-fff fsize12 f-fA">免费</i>
-                    </span>
-                    <span class="fl jgAttr c-ccc f-fA">
-                      <i class="c-999 f-fA">501人学习</i>
-                      |
-                      <i class="c-999 f-fA">501评论</i>
-                    </span>
-                  </section>
-                </div>
-              </li>
-              <li>
-                <div class="cc-l-wrap">
-                  <section class="course-img">
-                    <img src="~/assets/photo/course/1442295604295.jpg" class="img-responsive" alt="C4D零基础">
-                    <div class="cc-mask">
-                      <a href="/course/1" title="开始学习" class="comm-btn c-btn-1">开始学习</a>
-                    </div>
-                  </section>
-                  <h3 class="hLh30 txtOf mt10">
-                    <a href="/course/1" title="C4D零基础" class="course-title fsize18 c-333">C4D零基础</a>
-                  </h3>
-                  <section class="mt10 hLh20 of">
-                    <span class="fr jgTag bg-green">
-                      <i class="c-fff fsize12 f-fA">免费</i>
-                    </span>
-                    <span class="fl jgAttr c-ccc f-fA">
-                      <i class="c-999 f-fA">300人学习</i>
-                      |
-                      <i class="c-999 f-fA">300评论</i>
-                    </span>
-                  </section>
-                </div>
-              </li>
-              <li>
-                <div class="cc-l-wrap">
-                  <section class="course-img">
-                    <img
-                      src="~/assets/photo/course/1442302831779.jpg"
-                      class="img-responsive"
-                      alt="数学给宝宝带来的兴趣"
-                    >
-                    <div class="cc-mask">
-                      <a href="/course/1" title="开始学习" class="comm-btn c-btn-1">开始学习</a>
-                    </div>
-                  </section>
-                  <h3 class="hLh30 txtOf mt10">
-                    <a href="/course/1" title="数学给宝宝带来的兴趣" class="course-title fsize18 c-333">数学给宝宝带来的兴趣</a>
-                  </h3>
-                  <section class="mt10 hLh20 of">
-                    <span class="fr jgTag bg-green">
-                      <i class="c-fff fsize12 f-fA">免费</i>
-                    </span>
-                    <span class="fl jgAttr c-ccc f-fA">
-                      <i class="c-999 f-fA">256人学习</i>
-                      |
-                      <i class="c-999 f-fA">256评论</i>
-                    </span>
-                  </section>
-                </div>
-              </li>
-              <li>
-                <div class="cc-l-wrap">
-                  <section class="course-img">
-                    <img
-                      src="~/assets/photo/course/1442295455437.jpg"
-                      class="img-responsive"
-                      alt="零基础入门学习Python课程学习"
-                    >
-                    <div class="cc-mask">
-                      <a href="/course/1" title="开始学习" class="comm-btn c-btn-1">开始学习</a>
-                    </div>
-                  </section>
-                  <h3 class="hLh30 txtOf mt10">
-                    <a
-                      href="/course/1"
-                      title="零基础入门学习Python课程学习"
-                      class="course-title fsize18 c-333"
-                    >零基础入门学习Python课程学习</a>
-                  </h3>
-                  <section class="mt10 hLh20 of">
-                    <span class="fr jgTag bg-green">
-                      <i class="c-fff fsize12 f-fA">免费</i>
-                    </span>
-                    <span class="fl jgAttr c-ccc f-fA">
-                      <i class="c-999 f-fA">137人学习</i>
-                      |
-                      <i class="c-999 f-fA">137评论</i>
-                    </span>
-                  </section>
-                </div>
-              </li>
-              <li>
-                <div class="cc-l-wrap">
-                  <section class="course-img">
-                    <img
-                      src="~/assets/photo/course/1442295570359.jpg"
-                      class="img-responsive"
-                      alt="MySql从入门到精通"
-                    >
-                    <div class="cc-mask">
-                      <a href="/course/1" title="开始学习" class="comm-btn c-btn-1">开始学习</a>
-                    </div>
-                  </section>
-                  <h3 class="hLh30 txtOf mt10">
-                    <a href="/course/1" title="MySql从入门到精通" class="course-title fsize18 c-333">MySql从入门到精通</a>
-                  </h3>
-                  <section class="mt10 hLh20 of">
-                    <span class="fr jgTag bg-green">
-                      <i class="c-fff fsize12 f-fA">免费</i>
-                    </span>
-                    <span class="fl jgAttr c-ccc f-fA">
-                      <i class="c-999 f-fA">125人学习</i>
-                      |
-                      <i class="c-999 f-fA">125评论</i>
-                    </span>
-                  </section>
-                </div>
-              </li>
-              <li>
-                <div class="cc-l-wrap">
-                  <section class="course-img">
-                    <img src="~/assets/photo/course/1442302852837.jpg" class="img-responsive" alt="搜索引擎优化技术">
-                    <div class="cc-mask">
-                      <a href="/course/1" title="开始学习" class="comm-btn c-btn-1">开始学习</a>
-                    </div>
-                  </section>
-                  <h3 class="hLh30 txtOf mt10">
-                    <a href="/course/1" title="搜索引擎优化技术" class="course-title fsize18 c-333">搜索引擎优化技术</a>
-                  </h3>
-                  <section class="mt10 hLh20 of">
-                    <span class="fr jgTag bg-green">
-                      <i class="c-fff fsize12 f-fA">免费</i>
-                    </span>
-                    <span class="fl jgAttr c-ccc f-fA">
-                      <i class="c-999 f-fA">123人学习</i>
-                      |
-                      <i class="c-999 f-fA">123评论</i>
-                    </span>
-                  </section>
-                </div>
-              </li>
-              <li>
-                <div class="cc-l-wrap">
-                  <section class="course-img">
-                    <img src="~/assets/photo/course/1442295379715.jpg" class="img-responsive" alt="20世纪西方音乐">
-                    <div class="cc-mask">
-                      <a href="/course/1" title="开始学习" class="comm-btn c-btn-1">开始学习</a>
-                    </div>
-                  </section>
-                  <h3 class="hLh30 txtOf mt10">
-                    <a href="/course/1" title="20世纪西方音乐" class="course-title fsize18 c-333">20世纪西方音乐</a>
-                  </h3>
-                  <section class="mt10 hLh20 of">
-                    <span class="fr jgTag bg-green">
-                      <i class="c-fff fsize12 f-fA">免费</i>
-                    </span>
-                    <span class="fl jgAttr c-ccc f-fA">
-                      <i class="c-999 f-fA">34人学习</i>
-                      |
-                      <i class="c-999 f-fA">34评论</i>
-                    </span>
-                  </section>
-                </div>
-              </li>
+              
             </ul>
             <div class="clear"></div>
           </article>
@@ -314,5 +117,56 @@
   </div>
 </template>
 <script>
-export default {};
+import courseApi from '@/api/course'
+
+export default {
+  data() {
+    return {
+      page: 1,// 当前页
+      data: {},// 课程列表
+      subjectNestedList: [],// 一级分类
+      subSubjectList: [],// 二级分类
+      searchObj: {},// 查询对象
+      oneIndex: -1,
+      twoIndex: -1,
+      buyCountSort: "",
+      gmtCreateSort: "",
+      priceSort: ""
+    }
+  },
+
+  created() {
+    // 查询第一页课程
+    this.initCourseFirst()
+    // 查询所有课程分类
+    this.initAllSubject()
+  },
+
+  methods:{
+    // 查询第一页课程
+    initCourseFirst() {
+      courseApi.getCourseList(1, 8, this.searchObj)
+      .then(response => {
+        this.data = response.data.data
+      })
+    },
+    
+    // 查询所有课程分类
+    initAllSubject() {
+      courseApi.getAllSubject()
+      .then(response => {
+        this.subjectNestedList = response.data.data.data
+      })
+    },
+
+    // 分页切换
+    gotoPage(page) {
+      courseApi.getCourseList(page, 8, this.searchObj)
+      .then(response => {
+        this.data = response.data.data
+      })
+    }
+  }
+
+};
 </script>
