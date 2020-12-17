@@ -16,10 +16,10 @@
             <dd class="c-s-dl-li">
               <ul class="clearfix">
                 <li>
-                  <a title="全部" href="#">全部</a>
+                  <a title="全部" href="#" @click="initCouese()">全部</a>
                 </li>
-                <li v-for="(item, index) in subjectNestedList" :key="index">
-                  <a href="" :title="item.title">{{item.title}}</a>
+                <li v-for="(item, index) in subjectNestedList" :key="index" :class="{active:oneIndex==index}">
+                  <a href="#" :title="item.title" @click="selectOne(item.id, index)">{{item.title}}</a>
                 </li>
               </ul>
             </dd>
@@ -30,8 +30,8 @@
             </dt>
             <dd class="c-s-dl-li">
               <ul class="clearfix">
-                <li v-for="(item, index) in subSubjectList" :key="index">
-                  <a :title="item.title" href="#">{{item.title}}</a>
+                <li v-for="(item, index) in subSubjectList" :key="index" :class="{active:twoIndex==index}">
+                  <a :title="item.title" href="#" @click="selectTwo(item.id, index)">{{item.title}}</a>
                 </li>
               </ul>
             </dd>
@@ -47,15 +47,19 @@
           </section>
           <section class="fl">
             <ol class="js-tap clearfix">
-              <li>
-                <a title="关注度" href="#">关注度</a>
+              <li :class="{'current bg-orange':buyCountSort!=''}">
+                <a title="销量" href="javascript:void(0);" @click="searchBuyCount()">销量
+                <span :class="{hide:buyCountSort==''}">↓</span>
+                </a>
               </li>
-              <li>
-                <a title="最新" href="#">最新</a>
+              <li :class="{'current bg-orange':gmtCreateSort!=''}">
+                <a title="最新" href="javascript:void(0);" @click="searchGmtCreate()">最新
+                <span :class="{hide:gmtCreateSort==''}">↓</span>
+                </a>
               </li>
-              <li class="current bg-orange">
-                <a title="价格" href="#">价格&nbsp;
-                  <span>↓</span>
+              <li :class="{'current bg-orange':priceSort!=''}">
+                <a title="价格" href="javascript:void(0);" @click="searchPrice()">价格&nbsp;
+                  <span :class="{hide:priceSort==''}">↓</span>
                 </a>
               </li>
             </ol>
@@ -85,6 +89,9 @@
                     <span class="fr jgTag bg-green" v-if="Number(item.price) === 0">
                       <i class="c-fff fsize12 f-fA">免费</i>
                     </span>
+                    <span class="fr jgTag bg-green priceBg" v-if="Number(item.price) != 0">
+                      <i class="c-fff fsize12 f-fA">{{item.price}}元</i>
+                    </span>
                     <span class="fl jgAttr c-ccc f-fA">
                       <i class="c-999 f-fA">{{item.buyCount}}人学习</i>
                       |
@@ -101,13 +108,35 @@
         <!-- 公共分页 开始 -->
         <div>
           <div class="paging">
-            <a class="undisable" title>首</a>
-            <a id="backpage" class="undisable" href="#" title>&lt;</a>
-            <a href="#" title class="current undisable">1</a>
-            <a href="#" title>2</a>
-            <a id="nextpage" href="#" title>&gt;</a>
-            <a href="#" title>末</a>
-            <div class="clear"></div>
+            <!-- undisable这个class是否存在，取决于数据属性hasPrevious -->
+            <a
+              :class="{undisable: !data.hasPrevious}"
+              href="#"
+              title="首页"
+              @click.prevent="gotoPage(1)">首</a>
+            <a
+              :class="{undisable: !data.hasPrevious}"
+              href="#"
+              title="前一页"
+              @click.prevent="gotoPage(data.current-1)">&lt;</a>
+            <a
+              v-for="page in data.pages"
+              :key="page"
+              :class="{current: data.current == page, undisable: data.current == page}"
+              :title="'第'+page+'页'"
+              href="#"
+              @click.prevent="gotoPage(page)">{{ page }}</a>
+            <a
+              :class="{undisable: !data.hasNext}"
+              href="#"
+              title="后一页"
+              @click.prevent="gotoPage(data.current+1)">&gt;</a>
+            <a
+              :class="{undisable: !data.hasNext}"
+              href="#"
+              title="末页"
+              @click.prevent="gotoPage(data.pages)">末</a>
+            <div class="clear"/>
           </div>
         </div>
         <!-- 公共分页 结束 -->
@@ -165,8 +194,98 @@ export default {
       .then(response => {
         this.data = response.data.data
       })
+    },
+
+    // 全部按钮
+    initCouese() {
+      // 查询条件
+      this.searchObj = {}
+      // 点击样式生效
+      this.oneIndex = -1;
+      this.twoIndex = -1;
+      this.gotoPage(1)
+    },
+
+    // 查询一级分类对应的二级分类
+    selectOne(subjectParentId, index) {
+      // 点击样式生效
+      this.oneIndex = index;
+      this.twoIndex = -1;
+      // 把一级分类 id 赋值给 searchObj
+      this.searchObj.subjectId = null
+      this.subSubjectList = null
+      this.searchObj.subjectParentId = subjectParentId
+      this.gotoPage(1)
+      // 一级分类 id, 和所有的 一级分类 id 做比较
+      // 如果相同, 就取出来对应的二级分类
+      for (let i = 0; i < this.subjectNestedList.length; i++) {
+        // 获取每一个一级分类, 比较 id 是否相同
+        if (subjectParentId == this.subjectNestedList[i].id) {
+          // 取出二级分类
+          this.subSubjectList = this.subjectNestedList[i].children
+        }
+      }
+    },
+
+    // 查询二级分类对应的课程
+    selectTwo(subjectId, index) {
+      // 点击样式生效
+      this.twoIndex = index;
+      this.searchObj.subjectId = subjectId
+      this.gotoPage(1)
+    },
+
+    // 销量排序
+    searchBuyCount() {
+      this.buyCountSort = "1"
+      this.gmtCreateSort = ""
+      this.priceSort = ""
+      this.searchObj.buyCountSort = this.buyCountSort
+      this.searchObj.gmtCreateSort = this.gmtCreateSort
+      this.searchObj.priceSort = this.priceSort
+      this.gotoPage(1)
+    },
+    // 价格排序
+    searchPrice() {
+      this.buyCountSort = ""
+      this.gmtCreateSort = ""
+      this.priceSort = "1"
+      this.searchObj.buyCountSort = this.buyCountSort
+      this.searchObj.gmtCreateSort = this.gmtCreateSort
+      this.searchObj.priceSort = this.priceSort
+      this.gotoPage(1)
+    },
+    // 时间排序
+    searchGmtCreate() {
+      this.buyCountSort = ""
+      this.gmtCreateSort = "1"
+      this.priceSort = ""
+      this.searchObj.buyCountSort = this.buyCountSort
+      this.searchObj.gmtCreateSort = this.gmtCreateSort
+      this.searchObj.priceSort = this.priceSort
+      this.gotoPage(1)
     }
+
   }
 
 };
 </script>
+<style scoped>
+  .comm-course-list ul {
+      margin-left: -27px;
+  }
+  .active {
+    background-color: #00C758;
+    color: #fff;
+    border-radius: 18px;
+  }
+  .hide {
+    display: none;
+  }
+  .show {
+    display: block;
+  }
+  .priceBg {
+    background-color: red;
+  }
+</style>
