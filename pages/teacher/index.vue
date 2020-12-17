@@ -112,3 +112,9 @@ export default {
   }
 };
 </script>
+<style scoped>
+  .i-teacher-list ul {
+    margin-left: -25px;
+    padding-top: 20px;
+}
+</style>
