@@ -43,6 +43,9 @@
                       <span class="fr jgTag bg-green" v-if="Number(course.price) === 0">
                         <i class="c-fff fsize12 f-fA">免费</i>
                       </span>
+                      <span class="fr jgTag bg-green priceBg" v-if="Number(course.price) != 0">
+                        <i class="c-fff fsize12 f-fA">{{course.price}}元</i>
+                      </span>
                       <span class="fl jgAttr c-ccc f-fA">
                         <i class="c-999 f-fA">{{course.buyCount}}人学习</i>
                         |
@@ -174,3 +177,11 @@ export default {
 
 }
 </script>
+<style scoped>
+  .comm-course-list ul {
+      margin-left: -25px;
+  }
+  .priceBg {
+    background-color: red;
+  }
+</style>
